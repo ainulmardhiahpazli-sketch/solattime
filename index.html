@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SolatTime - Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navigation bar (same on all 3 pages) -->
+  <header>
+    <div class="header-inner">
+      <div class="logo">Solat<span>Time</span></div>
+      <nav>
+        <a href="index.html" class="active">Home</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="khatam.html">Khatam Planner</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Prayer Times</h1>
+    <p class="subtitle">Choose your city to see today's prayer times and a suggested activity.</p>
+
+    <!-- Feedback messages (errors, loading, success) appear here -->
+    <div id="message" class="message"></div>
+
+    <!-- Choose city -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="row">
+        <div>
+          <label for="citySelect">Select your city (Malaysia)</label>
+          <select id="citySelect">
+            <option value="">-- Choose a city --</option>
+            <option>Kuala Lumpur</option>
+            <option>Putrajaya</option>
+            <option>Shah Alam</option>
+            <option>Seremban</option>
+            <option>Melaka</option>
+            <option>Johor Bahru</option>
+            <option>Kuantan</option>
+            <option>Kuala Terengganu</option>
+            <option>Kota Bharu</option>
+            <option>George Town</option>
+            <option>Ipoh</option>
+            <option>Alor Setar</option>
+            <option>Kangar</option>
+            <option>Kuching</option>
+            <option>Kota Kinabalu</option>
+          </select>
+        </div>
+        <div style="flex:0 0 auto; min-width:0">
+          <button id="loadButton">Get Prayer Times</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid">
+
+      <!-- Prayer times table -->
+      <div class="card">
+        <h2>Today's Prayer Times</h2>
+        <div id="hijriDate" class="hijri">-</div>
+        <div id="gregorianDate" class="big-label">-</div>
+        <table>
+          <thead><tr><th>Prayer</th><th>Time</th></tr></thead>
+          <tbody id="timesBody">
+            <tr><td colspan="2" class="empty">Select a city and press "Get Prayer Times".</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div>
+        <!-- Next prayer countdown -->
+        <div class="card" style="margin-bottom:20px">
+          <h2>Next Prayer</h2>
+          <div id="nextName" class="big-label">-</div>
+          <div id="countdown" class="countdown">--:--:--</div>
+        </div>
+
+        <!-- Suggestion (made by our own if...else logic) -->
+        <div class="card">
+          <h2>Suggested Activity Now</h2>
+          <div id="suggestionBox">
+            <p class="big-label">Load prayer times to get a suggestion.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Qibla -->
+      <div class="card">
+        <h2>Qibla Direction</h2>
+        <div class="qibla-wrap">
+          <div class="compass"><div id="qiblaArrow" class="arrow"></div></div>
+          <div>
+            <div id="qiblaText" class="big-label">Load prayer times to see the Qibla direction.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ayah of the day -->
+      <div class="card">
+        <h2>Ayah of the Day</h2>
+        <div id="ayahBox"><p class="big-label">Load prayer times to see today's ayah.</p></div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>SolatTime - CSC2923 Final Assignment</footer>
+
+  <!-- Scripts: common helpers first, then this page's script -->
+  <script src="js/common.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SolatTime - Reminders</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">Solat<span>Time</span></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="reminders.html" class="active">Reminders</a>
+        <a href="khatam.html">Khatam Planner</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Activity Reminders</h1>
+    <p class="subtitle">Add, edit and delete your own religious activity reminders. They are saved on this computer.</p>
+
+    <div id="message" class="message"></div>
+
+    <div class="grid">
+
+      <!-- CREATE / UPDATE form -->
+      <div class="card">
+        <h2 id="formTitle">Add a Reminder</h2>
+        <form id="reminderForm">
+          <input type="hidden" id="reminderId">
+
+          <label for="title">Reminder title</label>
+          <input type="text" id="title" placeholder="e.g. Read Surah Al-Mulk" maxlength="50">
+          <div class="hint">3 to 50 characters.</div>
+
+          <label for="category">Category</label>
+          <select id="category">
+            <option value="">-- Choose a category --</option>
+            <option>Quran Reading</option>
+            <option>Zikr / Doa</option>
+            <option>Sunnah Prayer</option>
+            <option>Sunnah Fasting</option>
+            <option>Other</option>
+          </select>
+
+          <label for="prayer">When?</label>
+          <select id="prayer">
+            <option value="Anytime">Anytime</option>
+            <option value="Fajr">After Subuh</option>
+            <option value="Dhuhr">After Zohor</option>
+            <option value="Asr">After Asar</option>
+            <option value="Maghrib">After Maghrib</option>
+            <option value="Isha">After Isyak</option>
+          </select>
+          <div class="hint">The prayer time is shown from the city you chose on the Home page.</div>
+
+          <label for="note">Note (optional)</label>
+          <textarea id="note" rows="3" maxlength="150" placeholder="Extra details..."></textarea>
+
+          <button type="submit" id="saveButton">Add Reminder</button>
+          <button type="button" id="cancelButton" class="secondary" style="display:none">Cancel Edit</button>
+        </form>
+      </div>
+
+      <!-- READ: list of saved reminders -->
+      <div class="card">
+        <h2>My Reminders (<span id="count">0</span>)</h2>
+        <div id="reminderList"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>SolatTime - CSC2923 Final Assignment</footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/reminders.js"></script>
+</body>
+</html>

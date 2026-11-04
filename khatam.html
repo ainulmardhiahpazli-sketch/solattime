@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SolatTime - Khatam Planner</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">Solat<span>Time</span></div>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="reminders.html">Reminders</a>
+        <a href="khatam.html" class="active">Khatam Planner</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <h1>Khatam Planner</h1>
+    <p class="subtitle">Find out when you will finish the Quran, and whether you can finish before Ramadan.</p>
+
+    <div id="message" class="message"></div>
+
+    <div class="grid">
+
+      <!-- Inputs -->
+      <div class="card">
+        <h2>Your Reading</h2>
+        <form id="khatamForm" novalidate>
+          <label for="juzDone">Juzuk completed so far</label>
+          <input type="number" id="juzDone" min="0" max="30" step="1" placeholder="0 to 30">
+          <div class="hint">The Quran has 30 juzuk and 604 pages (Madinah Mushaf).</div>
+
+          <label for="pagesPerDay">Pages you read per day</label>
+          <input type="number" id="pagesPerDay" min="1" max="604" step="1" placeholder="e.g. 5">
+          <div class="hint">About 20 pages = 1 juzuk.</div>
+
+          <button type="submit">Calculate</button>
+        </form>
+
+        <hr style="margin:20px 0; border:none; border-top:1px solid #e6ebe8">
+        <div class="big-label">Ramadan start date (from Aladhan API)</div>
+        <div id="ramadanInfo" class="hijri" style="font-size:1.1rem">Loading...</div>
+      </div>
+
+      <!-- Results -->
+      <div class="card">
+        <h2>Results</h2>
+        <div id="results">
+          <p class="big-label">Fill in the form and press "Calculate".</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>SolatTime - CSC2923 Final Assignment</footer>
+
+  <script src="js/common.js"></script>
+  <script src="js/khatam.js"></script>
+</body>
+</html>

@@ -1,0 +1,530 @@
+/* css/style.css - one stylesheet shared by all 3 pages
+   Theme: cute blush pink + lavender */
+
+/* ---------- Colours and basic settings ---------- */
+:root {
+  --primary: #c13a7c;
+  /* raspberry pink: buttons, headings */
+  --primary-dark: #9c2a63;
+  /* darker pink: hover, logo */
+  --primary-light: #ffe3ef;
+  /* very light pink: highlights */
+  --accent: #8b5cf6;
+  /* lavender purple: arrow, small details */
+  --accent-light: #ece6ff;
+  /* light lavender */
+  --bg-top: #fff0f6;
+  /* page background (top) */
+  --bg-bottom: #f5efff;
+  /* page background (bottom) */
+  --text: #43283a;
+  /* dark plum text (easy to read) */
+  --muted: #86677a;
+  /* soft grey-plum for small text */
+  --white: #ffffff;
+  --border: #f6cfe0;
+  /* soft pink borders */
+  --red: #d23b4a;
+  --red-light: #ffe1e4;
+  --mint: #e0f7ea;
+  /* success messages */
+  --mint-dark: #1c6b43;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* The pink-to-lavender background is put on <html> so it covers the whole page height */
+html {
+  background: linear-gradient(180deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+  background-color: var(--bg-top);
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Segoe UI', Arial, sans-serif;
+  color: var(--text);
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+/* ---------- Header and navigation ---------- */
+header {
+  background: linear-gradient(90deg, #ffd1e3 0%, #e4d6ff 100%);
+  border-bottom: 4px dotted #f48fb9;
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--primary-dark);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.logo::before {
+  content: '\1F319  ';
+}
+
+/* crescent moon */
+
+nav a {
+  color: #5b2a47;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 999px;
+  margin-left: 6px;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+nav a:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+nav a.active {
+  background: var(--white);
+  color: var(--primary);
+  box-shadow: 0 2px 6px rgba(193, 58, 124, 0.25);
+}
+
+nav a[href="index.html"]::before {
+  content: '\1F3E0  ';
+}
+
+/* house */
+nav a[href="reminders.html"]::before {
+  content: '\1F514  ';
+}
+
+/* bell */
+nav a[href="khatam.html"]::before {
+  content: '\1F4D6  ';
+}
+
+/* open book */
+
+/* ---------- Page layout ---------- */
+main {
+  max-width: 1000px;
+  margin: 24px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  color: var(--primary);
+  margin: 0 0 4px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin: 0 0 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.card {
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: 24px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(193, 58, 124, 0.10);
+}
+
+.card h2 {
+  margin: 0 0 12px;
+  font-size: 1.15rem;
+  color: var(--primary);
+}
+
+/* ---------- Forms and buttons ---------- */
+label {
+  display: block;
+  font-weight: 700;
+  margin: 12px 0 4px;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: 14px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  background: #fffafc;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-light);
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 3px;
+}
+
+button {
+  background: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  margin-top: 14px;
+  box-shadow: 0 3px 0 var(--primary-dark);
+  transition: transform 0.1s, background 0.2s;
+}
+
+button:hover {
+  background: #d4478a;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+button:disabled {
+  background: #cdb8c4;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button.secondary {
+  background: var(--accent-light);
+  color: #4b3a9c;
+  margin-left: 8px;
+  box-shadow: 0 3px 0 #cfc3f5;
+}
+
+button.secondary:hover {
+  background: #ddd2ff;
+}
+
+button.danger {
+  background: var(--red);
+  box-shadow: 0 3px 0 #9f2b37;
+}
+
+button.danger:hover {
+  background: #e04856;
+}
+
+button.small {
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  margin-top: 0;
+}
+
+.row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.row>div {
+  flex: 1;
+  min-width: 180px;
+}
+
+/* ---------- Feedback messages ---------- */
+.message {
+  display: none;
+  padding: 12px 18px;
+  border-radius: 16px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.message.success {
+  background: var(--mint);
+  color: var(--mint-dark);
+}
+
+.message.error {
+  background: var(--red-light);
+  color: #a31d2b;
+}
+
+.message.info {
+  background: var(--accent-light);
+  color: #4b3a9c;
+}
+
+/* ---------- Prayer times table ---------- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px 8px;
+  border-bottom: 1px dashed var(--border);
+}
+
+th {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+tr.current td {
+  background: var(--primary-light);
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
+tr.current td:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+tr.current td:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+.hijri {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.countdown {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 4px 0;
+}
+
+.big-label {
+  color: var(--muted);
+}
+
+/* ---------- Suggestion box ---------- */
+.suggestion {
+  background: #fff0f6;
+  border: 2px dashed #f48fb9;
+  border-radius: 18px;
+  padding: 14px 18px;
+}
+
+.suggestion h3 {
+  margin: 0 0 6px;
+  color: var(--primary);
+}
+
+.suggestion h3::before {
+  content: '\2728  ';
+}
+
+/* sparkles */
+.suggestion p {
+  margin: 4px 0;
+}
+
+.suggestion .extra {
+  color: #6d3fc0;
+  font-weight: 700;
+}
+
+/* ---------- Qibla ---------- */
+.qibla-wrap {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.compass {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  border: 4px solid var(--primary);
+  position: relative;
+  flex-shrink: 0;
+  background: #fff5f8;
+  box-shadow: 0 0 0 6px var(--primary-light);
+}
+
+.compass::before {
+  content: 'N';
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--muted);
+}
+
+.arrow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 6px;
+  height: 44px;
+  margin-left: -3px;
+  margin-top: -44px;
+  background: var(--accent);
+  border-radius: 3px;
+  transform-origin: 50% 100%;
+  transition: transform 0.6s ease;
+}
+
+.arrow::after {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: -6px;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-bottom: 14px solid var(--accent);
+}
+
+/* ---------- Ayah ---------- */
+.arabic {
+  font-size: 1.6rem;
+  direction: rtl;
+  text-align: right;
+  line-height: 2.1;
+  margin: 4px 0 10px;
+  font-family: 'Traditional Arabic', 'Amiri', serif;
+}
+
+.translation {
+  color: var(--text);
+}
+
+.reference {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+
+/* ---------- Reminder list ---------- */
+.reminder {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  background: #fffafc;
+  border: 2px solid var(--border);
+  border-left: 8px solid #f48fb9;
+  border-radius: 18px;
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+.reminder h3 {
+  margin: 0 0 2px;
+  font-size: 1.05rem;
+  color: var(--primary-dark);
+}
+
+.reminder .meta {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.reminder .note {
+  margin-top: 4px;
+}
+
+.reminder .actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 24px 0;
+}
+
+/* ---------- Khatam results ---------- */
+.result-table td:last-child {
+  font-weight: 700;
+  text-align: right;
+  color: var(--primary-dark);
+}
+
+.status {
+  padding: 12px 18px;
+  border-radius: 16px;
+  font-weight: 700;
+  margin-top: 14px;
+}
+
+.status.good {
+  background: var(--mint);
+  color: var(--mint-dark);
+}
+
+.status.late {
+  background: #fff0d6;
+  color: #8a5a00;
+}
+
+footer {
+  text-align: center;
+  color: var(--muted);
+  padding: 24px 0;
+  font-size: 0.85rem;
+}
+
+footer::after {
+  content: '  \1F496';
+}
+
+/* sparkling heart */
+
+/* ---------- Small screens ---------- */
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reminder {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
