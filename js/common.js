@@ -41,22 +41,14 @@ function loadData(key, fallback) {
 
 // ---------- 3. Fetch JSON from an API ----------
 // fetch() asks the internet for data. We wait for it with "await".
-// If the internet is off, or the server is slow/down, this function throws an error
+// If the internet is off or the server is down, this function throws an error
 // which the calling page catches and shows as a clear message.
 async function fetchJSON(url) {
-  // Stop waiting after 10 seconds
-  const controller = new AbortController();
-  const timer = setTimeout(function () { controller.abort(); }, 10000);
-
-  try {
-    const response = await fetch(url, { signal: controller.signal });
-    if (!response.ok) {
-      throw new Error('Server error ' + response.status);
-    }
-    return await response.json(); // convert the reply text into a JavaScript object
-  } finally {
-    clearTimeout(timer);
+  const response = await fetch(url);   // ask the API for data and wait for the reply
+  if (response.ok === false) {         // the server answered with an error
+    throw new Error('Server error ' + response.status);
   }
+  return await response.json();        // convert the reply text into a JavaScript object
 }
 
 // ---------- 4. Date helpers ----------
@@ -66,10 +58,18 @@ function startOfToday() {
   return new Date(now.getFullYear(), now.getMonth(), now.getDate());
 }
 
+// Make a number two digits long: 5 becomes "05", 12 stays "12"
+function twoDigits(number) {
+  if (number < 10) {
+    return '0' + number;
+  }
+  return String(number);
+}
+
 // Turn a Date into dd-mm-yyyy, the format the Aladhan API wants
 function toApiDate(date) {
-  const dd = String(date.getDate()).padStart(2, '0');
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
+  const dd = twoDigits(date.getDate());
+  const mm = twoDigits(date.getMonth() + 1);
   return dd + '-' + mm + '-' + date.getFullYear();
 }
 

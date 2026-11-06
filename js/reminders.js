@@ -109,7 +109,8 @@ function renderList() {
   // Prayer times saved by the Home page (may be null if the user never opened Home)
   const saved = loadData(KEY_TIMES, null);
 
-  reminders.forEach(function (item) {
+  for (let i = 0; i < reminders.length; i++) {
+    const item = reminders[i];
     const card = document.createElement('div');
     card.className = 'reminder';
 
@@ -157,15 +158,25 @@ function renderList() {
     card.appendChild(info);
     card.appendChild(actions);
     list.appendChild(card);
-  });
+  }
+}
+
+// Look through the list and return the reminder with this id (or null)
+function findReminder(id) {
+  for (let i = 0; i < reminders.length; i++) {
+    if (reminders[i].id === id) {
+      return reminders[i];
+    }
+  }
+  return null;
 }
 
 // =====================================================================
 //  UPDATE (step 1): put the chosen reminder back into the form
 // =====================================================================
 function startEdit(id) {
-  const item = reminders.find(function (r) { return r.id === id; });
-  if (item === undefined) return;
+  const item = findReminder(id);
+  if (item === null) return;
 
   idInput.value = item.id;           // remember which one we are editing
   titleInput.value = item.title;
@@ -183,14 +194,20 @@ function startEdit(id) {
 //  DELETE
 // =====================================================================
 function deleteReminder(id) {
-  const item = reminders.find(function (r) { return r.id === id; });
-  if (item === undefined) return;
+  const item = findReminder(id);
+  if (item === null) return;
 
   // Ask the user to confirm
   if (confirm('Delete "' + item.title + '"?') === false) return;
 
   // Keep every reminder EXCEPT the one with this id
-  reminders = reminders.filter(function (r) { return r.id !== id; });
+  const remaining = [];
+  for (let i = 0; i < reminders.length; i++) {
+    if (reminders[i].id !== id) {
+      remaining.push(reminders[i]);
+    }
+  }
+  reminders = remaining;
   saveData(KEY_REMINDERS, reminders);
 
   // If we were editing this one, clear the form
@@ -204,9 +221,11 @@ function deleteReminder(id) {
 // (If the list is empty, the first id is 1.)
 function getNextId() {
   let biggest = 0;
-  reminders.forEach(function (r) {
-    if (r.id > biggest) biggest = r.id;
-  });
+  for (let i = 0; i < reminders.length; i++) {
+    if (reminders[i].id > biggest) {
+      biggest = reminders[i].id;
+    }
+  }
   return biggest + 1;
 }
 

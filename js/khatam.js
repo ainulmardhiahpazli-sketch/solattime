@@ -184,16 +184,16 @@ function showTable(box, rows) {
   table.className = 'result-table';
   const body = document.createElement('tbody');
 
-  rows.forEach(function (row) {
+  for (let i = 0; i < rows.length; i++) {
     const tr = document.createElement('tr');
     const label = document.createElement('td');
-    label.textContent = row[0];
+    label.textContent = rows[i][0];
     const value = document.createElement('td');
-    value.textContent = row[1];
+    value.textContent = rows[i][1];
     tr.appendChild(label);
     tr.appendChild(value);
     body.appendChild(tr);
-  });
+  }
 
   table.appendChild(body);
   box.appendChild(table);

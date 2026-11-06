@@ -25,21 +25,21 @@ const PRAYER_NAMES = {
 // and using them gave a wrong Qibla direction. So we give the Qibla API
 // the correct coordinates of the city the user chose.
 const CITY_COORDINATES = {
-  'Kuala Lumpur': { lat: 3.1390, lng: 101.6869 },
-  'Putrajaya': { lat: 2.9264, lng: 101.6964 },
-  'Shah Alam': { lat: 3.0738, lng: 101.5183 },
-  'Seremban': { lat: 2.7258, lng: 101.9424 },
-  'Melaka': { lat: 2.1896, lng: 102.2501 },
-  'Johor Bahru': { lat: 1.4927, lng: 103.7414 },
-  'Kuantan': { lat: 3.8077, lng: 103.3260 },
+  'Kuala Lumpur':     { lat: 3.1390, lng: 101.6869 },
+  'Putrajaya':        { lat: 2.9264, lng: 101.6964 },
+  'Shah Alam':        { lat: 3.0738, lng: 101.5183 },
+  'Seremban':         { lat: 2.7258, lng: 101.9424 },
+  'Melaka':           { lat: 2.1896, lng: 102.2501 },
+  'Johor Bahru':      { lat: 1.4927, lng: 103.7414 },
+  'Kuantan':          { lat: 3.8077, lng: 103.3260 },
   'Kuala Terengganu': { lat: 5.3302, lng: 103.1408 },
-  'Kota Bharu': { lat: 6.1254, lng: 102.2386 },
-  'George Town': { lat: 5.4141, lng: 100.3288 },
-  'Ipoh': { lat: 4.5975, lng: 101.0901 },
-  'Alor Setar': { lat: 6.1248, lng: 100.3678 },
-  'Kangar': { lat: 6.4414, lng: 100.1986 },
-  'Kuching': { lat: 1.5535, lng: 110.3593 },
-  'Kota Kinabalu': { lat: 5.9804, lng: 116.0735 }
+  'Kota Bharu':       { lat: 6.1254, lng: 102.2386 },
+  'George Town':      { lat: 5.4141, lng: 100.3288 },
+  'Ipoh':             { lat: 4.5975, lng: 101.0901 },
+  'Alor Setar':       { lat: 6.1248, lng: 100.3678 },
+  'Kangar':           { lat: 6.4414, lng: 100.1986 },
+  'Kuching':          { lat: 1.5535, lng: 110.3593 },
+  'Kota Kinabalu':    { lat: 5.9804, lng: 116.0735 }
 };
 
 // Keys used in Local Storage
@@ -80,13 +80,12 @@ async function loadPrayerTimes() {
   }
 
   showMessage('message', 'Loading prayer times for ' + city + '...', 'info');
-  loadButton.disabled = true; // stop double clicking while loading
 
   try {
     // ---- API CALL: Aladhan "timingsByCity" ----
     // method=17 is the JAKIM (Malaysia) calculation method
     const url = 'https://api.aladhan.com/v1/timingsByCity?city=' +
-      encodeURIComponent(city) + '&country=Malaysia&method=17';
+                encodeURIComponent(city) + '&country=Malaysia&method=17';
     const json = await fetchJSON(url);
 
     // ERROR HANDLING 2: empty results (API replied but has no timings)
@@ -121,10 +120,8 @@ async function loadPrayerTimes() {
     loadAyah();
 
   } catch (error) {
-    // ERROR HANDLING 3: failed API request (no internet, server down, timeout)
+    // ERROR HANDLING 3: failed API request (no internet, server down)
     showMessage('message', 'Could not get prayer times. Please check your internet connection and try again.', 'error');
-  } finally {
-    loadButton.disabled = false; // enable the button again
   }
 }
 
@@ -173,9 +170,10 @@ function toMinutes(text) {
 // Colour the row of the prayer time we are in now (DOM manipulation)
 function highlightCurrentPrayer() {
   // remove old highlight
-  document.querySelectorAll('#timesBody tr').forEach(function (row) {
-    row.classList.remove('current');
-  });
+  const rows = document.querySelectorAll('#timesBody tr');
+  for (let i = 0; i < rows.length; i++) {
+    rows[i].classList.remove('current');
+  }
 
   const now = new Date();
   const nowMin = now.getHours() * 60 + now.getMinutes();
@@ -237,7 +235,7 @@ function tick() {
 
   document.getElementById('nextName').textContent = PRAYER_NAMES[nextName] + ' in';
   document.getElementById('countdown').textContent =
-    String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    twoDigits(h) + ':' + twoDigits(m) + ':' + twoDigits(s);
 
   // Once every minute, refresh the highlighted row and the suggestion
   if (now.getMinutes() !== lastMinute) {
@@ -264,7 +262,7 @@ function getSuggestion(timings, hijriDay, hijriMonth, now) {
   const day = now.getDay(); // 0 = Sunday ... 5 = Friday ... 6 = Saturday
 
   // FALLBACK: if any time is missing/broken, we cannot make a suggestion
-  if ([fajr, sunrise, dhuhr, asr, maghrib, isha, nowMin].some(isNaN)) {
+  if (isNaN(fajr) || isNaN(sunrise) || isNaN(dhuhr) || isNaN(asr) || isNaN(maghrib) || isNaN(isha)) {
     return null;
   }
 
@@ -379,12 +377,12 @@ function showSuggestion() {
   para.textContent = suggestion.message;
   wrapper.appendChild(para);
 
-  suggestion.extras.forEach(function (text) {
+  for (let i = 0; i < suggestion.extras.length; i++) {
     const extra = document.createElement('p');
     extra.className = 'extra';
-    extra.textContent = text;
+    extra.textContent = suggestion.extras[i];
     wrapper.appendChild(extra);
-  });
+  }
 
   box.appendChild(wrapper);
 
@@ -462,7 +460,7 @@ async function loadAyah() {
     const reference = document.createElement('div');
     reference.className = 'reference';
     reference.textContent = 'Surah ' + english.surah.englishName + ' (' +
-      english.surah.number + ':' + english.numberInSurah + ')';
+                            english.surah.number + ':' + english.numberInSurah + ')';
 
     box.appendChild(arabicText);
     box.appendChild(englishText);
